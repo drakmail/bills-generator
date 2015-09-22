@@ -1,0 +1,27 @@
+{
+  "name": "BillGenerator",
+  "description": "Bills generator",
+  "version": "1.0.0",
+  "homepage": "",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.12.2",
+    "dateformat": "^1.0.11",
+    "express": "^4.12.3",
+    "html-pdf": "^1.1.0",
+    "numeral": "^1.5.3",
+    "nunjucks": "^2.1.0",
+    "redis": "^2.0.0",
+    "rubles": "^0.2.0",
+    "serve-static": "^1.9.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "ISC"
+}

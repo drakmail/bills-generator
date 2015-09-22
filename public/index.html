@@ -1,0 +1,118 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Генератор счетов</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://dadata.ru/static/css/lib/suggestions-15.8.css" type="text/css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <!--[if lt IE 10]>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
+  <![endif]-->
+  <script type="text/javascript" src="https://dadata.ru/static/js/lib/jquery.suggestions-15.8.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+</head>
+<body>
+  <div class="container" ng-app="billGenerator">
+    <div class="row" ng-controller="AppCtrl">
+      <div class="col-md-12">
+        <h1>Генератор счетов</h1>
+        <form action="/request" method="POST">
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label for="orgname">Поиск организации</label>
+              <input class="form-control" type="text" size="100" id="fullname" name="orgname" >
+              <hr>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inn">ИНН</label>
+              <input class="form-control" type="text" id="inn" name="inn" >
+            </div>
+            <div class="form-group col-md-6">
+              <label for="kpp">КПП</label>
+              <input class="form-control" type="text" id="kpp" name="kpp" >
+            </div>
+            <div class="form-group col-md-6">
+              <label for="name">Название организации</label>
+              <input class="form-control" type="text" id="name" name="name" >
+            </div>
+            <div class="form-group col-md-6">
+              <label for="address">Юр. адрес</label>
+              <input class="form-control" type="text" id="address" name="address" >
+            </div>
+          </div>
+          <div class="row" ng-controller="ServicesCtrl">
+            <div class="col-md-12">
+              <h2>Услуги</h2>
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th width="70%">Название товара или услуги</th>
+                    <th>Кол-во</th>
+                    <th>Цена</th>
+                    <th width="100px">Сумма</th>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="service in services track by service.id">
+                    <td><input type="text" name="services[{{service.id}}][name]" class="form-control" ng-model="service.name"></td>
+                    <td><input type="text" name="services[{{service.id}}][amount]" class="form-control" ng-model="service.amount"></td>
+                    <td><input type="text" name="services[{{service.id}}][price]" class="form-control" ng-model="service.price"></td>
+                    <td>{{ service.amount * service.price }}</td>
+                    <td><button class="btn btn-xs btn-danger" type="button" ng-click="removeService($index)">x</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button class="btn btn-primary add-new-service" type="button" ng-click="addService()">Добавить услугу</button>
+              <hr>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <input class="btn btn-success" type="submit" value="Сгенерировать" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $("#fullname").suggestions({
+      serviceUrl: "https://dadata.ru/api/v2",
+      token: "db35874c5da5b60aec2992aad4c7baa792a0443e",
+      type: "PARTY",
+      count: 5,
+      /* Вызывается, когда пользователь выбирает одну из подсказок */
+      onSelect: function(suggestion) {
+        $("#inn").val(suggestion.data.inn)
+        $("#kpp").val(suggestion.data.kpp)
+        $("#name").val(suggestion.data.name.short_with_opf)
+        $("#address").val(suggestion.data.address.value)
+      }
+    });
+  })
+  angular.module('billGenerator', [])
+    .controller('ServicesCtrl', function($scope) {
+      $scope.services = []
+      var lastId = 0;
+      $scope.addService = function() {
+        $scope.services.push({
+          id: lastId++,
+          amount: 0,
+          price: 0
+        })
+      }
+      $scope.removeService = function($index) {
+        $scope.services.splice($index, 1);
+      }
+    })
+    .controller('AppCtrl', function($scope) {
+
+    })
+  </script>
+</body>
+</html>
