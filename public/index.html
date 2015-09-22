@@ -16,13 +16,13 @@
 </head>
 <body>
   <div class="container" ng-app="billGenerator">
-    <div class="row" ng-controller="AppCtrl">
+    <div class="row">
       <div class="col-md-12">
         <h1>Генератор счетов</h1>
         <form action="/request" method="POST">
           <div class="row">
             <div class="form-group col-md-12">
-              <label for="orgname">Поиск организации</label>
+              <label for="orgname">Поиск организации (название, ИНН)</label>
               <input class="form-control" type="text" size="100" id="fullname" name="orgname" >
               <hr>
             </div>
@@ -80,25 +80,29 @@
     </div>
   </div>
   <script type="text/javascript">
-  $(document).ready(function() {
-    $("#fullname").suggestions({
-      serviceUrl: "https://dadata.ru/api/v2",
-      token: "db35874c5da5b60aec2992aad4c7baa792a0443e",
-      type: "PARTY",
-      count: 5,
-      /* Вызывается, когда пользователь выбирает одну из подсказок */
-      onSelect: function(suggestion) {
-        $("#inn").val(suggestion.data.inn)
-        $("#kpp").val(suggestion.data.kpp)
-        $("#name").val(suggestion.data.name.short_with_opf)
-        $("#address").val(suggestion.data.address.value)
-      }
-    });
+  $(document).ready(function () {
+    var initSuggestions = function (dadata) {
+      $('#fullname').suggestions({
+        serviceUrl: 'https://dadata.ru/api/v2',
+        token: dadata,
+        type: 'PARTY',
+        count: 5,
+        onSelect: function(suggestion) {
+          $('#inn').val(suggestion.data.inn)
+          $('#kpp').val(suggestion.data.kpp)
+          $('#name').val(suggestion.data.name.short_with_opf)
+          $('#address').val(suggestion.data.address.value)
+        }
+      })
+    }
+    $.getJSON('/config', function (config) {
+      initSuggestions(config.dadata)
+    })
   })
   angular.module('billGenerator', [])
     .controller('ServicesCtrl', function($scope) {
       $scope.services = []
-      var lastId = 0;
+      var lastId = 0
       $scope.addService = function() {
         $scope.services.push({
           id: lastId++,
@@ -107,11 +111,8 @@
         })
       }
       $scope.removeService = function($index) {
-        $scope.services.splice($index, 1);
+        $scope.services.splice($index, 1)
       }
-    })
-    .controller('AppCtrl', function($scope) {
-
     })
   </script>
 </body>

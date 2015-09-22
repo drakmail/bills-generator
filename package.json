@@ -1,12 +1,12 @@
 {
-  "name": "BillGenerator",
-  "description": "Bills generator",
+  "name": "BillsGenerator",
+  "description": "Генератор счетов для ООО",
   "version": "1.0.0",
-  "homepage": "",
-  "author": "",
+  "homepage": "https://github.com/drakmail/bills-generator",
+  "author": "Alexander Maslov <drakmail@gmail.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:drakmail/bills-generator.git"
   },
   "main": "app.js",
   "dependencies": {
@@ -23,5 +23,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "ISC"
+  "bugs": {
+    "url": "https://github.com/drakmail/bills-generator/issues"
+  },
+  "license": "GPL-3.0"
 }

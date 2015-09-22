@@ -28,7 +28,7 @@
         <table width="100%" border="0" cellpadding="0" cellspacing="0" style="height: 13mm;">
           <tr>
             <td valign="top">
-              <div>ПАО "СБЕРБАНК РОССИИ" Г.МОСКВА</div>
+              <div>{{ config.bank.name }}</div>
             </td>
           </tr>
           <tr>
@@ -42,8 +42,8 @@
         <div>БИK</div>
       </td>
       <td rowspan="2" style="vertical-align: top; width: 60mm;">
-        <div style=" height: 7mm; line-height: 7mm; vertical-align: middle;">044525225</div>
-        <div>30101810400000000225</div>
+        <div style=" height: 7mm; line-height: 7mm; vertical-align: middle;">{{ config.bank.bik }}</div>
+        <div>{{ config.bank.ks }}</div>
       </td>
     </tr>
     <tr>
@@ -53,16 +53,16 @@
     </tr>
     <tr>
       <td style="min-height:6mm; height:auto; width: 50mm;">
-        <div>ИНН 7725841162</div>
+        <div>ИНН {{ config.company.inn }}</div>
       </td>
       <td style="min-height:6mm; height:auto; width: 55mm;">
-        <div>КПП 772501001</div>
+        <div>КПП {{ config.company.kpp }}</div>
       </td>
       <td rowspan="2" style="min-height:19mm; height:auto; vertical-align: top; width: 25mm;">
         <div>Расчетный счет</div>
       </td>
       <td rowspan="2" style="min-height:19mm; height:auto; vertical-align: top; width: 60mm;">
-        <div>40702810438000007054</div>
+        <div>{{ config.company.rs }}</div>
       </td>
     </tr>
     <tr>
@@ -71,7 +71,7 @@
         <table border="0" cellpadding="0" cellspacing="0" style="height: 13mm; width: 105mm;">
           <tr>
             <td valign="top">
-              <div>ООО "Дженерейт Клаб"</div>
+              <div>{{ config.company.name }}</div>
             </td>
           </tr>
           <tr>
@@ -99,7 +99,7 @@
       </td>
       <td>
         <div style="font-weight:bold;  padding-left:2px;">
-          ООО "Дженерейт Клаб", ИНН 7725841162, Москва г, ул. Рощинская 2-я, д. 4, офис 503
+          {{ config.company.name }}, ИНН {{ config.company.inn }}, КПП: {{ config.company.kpp }}, {{ config.company.address }}
         </div>
       </td>
     </tr>
@@ -163,7 +163,7 @@
   </div>
   <div style="background-color:#000000; width:100%; font-size:1px; height:2px; margin-bottom: 14mm;">&nbsp;</div>
 
-  <div>Генеральный директор ______________________ (Маслов А. С.)</div>
+  <div>Генеральный директор ______________________ ({{ config.company.director }})</div>
   <br/>
 
   <div style="width: 85mm;text-align:center;">М.П.</div>
