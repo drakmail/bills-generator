@@ -1,5 +1,9 @@
 # Bills Generator
 
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
+
+![видео работы](https://raw.githubusercontent.com/drakmail/bills-generator/master/site/screen.gif)
+
 Генератор счетов для Российских компаний. Позволяет быстро и просто создавать счета для выставления.
 
 ## Запуск локально
