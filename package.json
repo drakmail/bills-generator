@@ -1,7 +1,7 @@
 {
   "name": "BillsGenerator",
   "description": "Генератор счетов для ООО",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/drakmail/bills-generator",
   "author": "Alexander Maslov <drakmail@gmail.com>",
   "repository": {

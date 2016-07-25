@@ -39,23 +39,26 @@ env.addFilter('formatMoney', function (number) {
   return numeral(number).format('0,0[.]00')
 })
 
-app.use(serveStatic('public', {'index': ['index.html']}))
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/config', function (req, res) {
-  res.send({
-    dadata: config.dadata
+if (!process.env.API_MODE) {
+  app.use(serveStatic('public', {'index': ['index.html']}))
+
+  app.get('/config', function (req, res) {
+    res.send({
+      dadata: config.dadata
+    })
   })
-})
+}
 
 app.post('/request', function (req, httpRes) {
   var curDate = dateFormat(new Date(), 'dd.mm.yyyy')
   var redisDate = dateFormat(new Date(), 'dmyy')
-  client.incr('gc:bill-number:' + redisDate, function (err, bill_number) {
+  client.incr('gc:bill-number:' + redisDate, function (err, billNumber) {
     if (err) {
       console.error(err)
     }
-    var billNumber = redisDate + '-' + bill_number
+    billNumber = req.body.bill || (redisDate + '-' + billNumber)
     var billname = 'bill-' + billNumber + '.pdf'
     var html = fs.readFileSync('./public/data/bill.html', 'utf8')
     var options = {
