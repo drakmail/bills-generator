@@ -80,10 +80,18 @@ var nodeConfig = {
   port: process.env.PORT || 8080
 }
 
-// Start server
-server.listen(nodeConfig.port, nodeConfig.ip, function () {
-  console.log('Express server listening on %d, in %s mode', nodeConfig.port, app.get('env'))
-})
+if (isNaN(nodeConfig.port)) { // unix socket
+  fs.unlink(nodeConfig.port, function () {
+    server.listen(nodeConfig.port, nodeConfig.ip, function () {
+      console.log('Express server listening on %d, in %s mode', nodeConfig.port, app.get('env'))
+    })
+    fs.chmod(nodeConfig.port, 0x777)
+  })
+} else { // TCP port
+  server.listen(nodeConfig.port, nodeConfig.ip, function () {
+    console.log('Express server listening on %d, in %s mode', nodeConfig.port, app.get('env'))
+  })
+}
 
 // Expose app
 exports = module.exports = app
