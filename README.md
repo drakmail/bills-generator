@@ -11,6 +11,7 @@
 ```
 git clone git@github.com:drakmail/bills-generator.git
 npm install
+mv config.example config
 node app.js
 ```
 
