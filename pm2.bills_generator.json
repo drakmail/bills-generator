@@ -1,0 +1,10 @@
+{
+  "apps" : [{
+    "script"      : "app.js",
+    "watch"       : false,
+    "env": {
+      "PORT": "/tmp/bills.sock"
+    },
+    "name"        : "bills_generator"
+  }]
+}
