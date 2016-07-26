@@ -3,7 +3,8 @@
     "script"      : "app.js",
     "watch"       : false,
     "env": {
-      "PORT": "/tmp/bills.sock"
+      "PORT": "/tmp/bills.sock",
+      "API_MODE": "1"
     },
     "name"        : "bills_generator"
   }]
