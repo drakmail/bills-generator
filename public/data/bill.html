@@ -131,7 +131,7 @@
         <tr style="text-align: center;">
           <td>{{ loop.index }}</td>
           <td style="text-align: left; padding-left: 7px;">{{ service.name }}</td>
-          <td>{{ service.amount | formatMoney }}</td>
+          <td>{{ service.amount }}</td>
           <td>{{ service.price | formatMoney }} р.</td>
           <td>{{ (service.amount * service.price) | formatMoney }} р.</td>
         </tr>

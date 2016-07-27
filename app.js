@@ -23,6 +23,17 @@ var env = nunjucks.configure({
   autoescape: true
 })
 
+numeral.language('ru', {
+  delimiters: {
+    thousands: ' ',
+    decimal: ','
+  },
+  currency: {
+    symbol: '₽'
+  }
+})
+numeral.language('ru')
+
 env.addFilter('countSum', function (services) {
   var totalSum = 0
   for (var i = 0; i < services.length; i++) {
@@ -36,7 +47,7 @@ env.addFilter('rubles', function (amount) {
 })
 
 env.addFilter('formatMoney', function (number) {
-  return numeral(number).format('0,0[.]00')
+  return numeral(number).format('0,0.00')
 })
 
 app.use(bodyParser.urlencoded({ extended: true }))
