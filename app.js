@@ -62,6 +62,12 @@ if (!process.env.API_MODE) {
   })
 }
 
+app.get('/status', function (req, res) {
+  res.send({
+    status: 'ok'
+  })
+})
+
 app.post('/request', function (req, httpRes) {
   var curDate = dateFormat(new Date(), 'dd.mm.yyyy')
   var redisDate = dateFormat(new Date(), 'dmyy')
