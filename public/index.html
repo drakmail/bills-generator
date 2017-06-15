@@ -42,6 +42,10 @@
               <label for="address">Юр. адрес</label>
               <input class="form-control" type="text" id="address" name="address" >
             </div>
+            <div class="form-group col-md-12">
+              <input type="checkbox" name="payed" id="payed" />
+              <label for="payed">Оплачен?</label>
+            </div>
           </div>
           <div class="row" ng-controller="ServicesCtrl">
             <div class="col-md-12">
@@ -52,7 +56,7 @@
                     <th width="70%">Название товара или услуги</th>
                     <th>Кол-во</th>
                     <th>Цена</th>
-                    <th width="100px">Сумма</th>
+                    <th width="100">Сумма</th>
                     <td></td>
                   </tr>
                 </thead>
