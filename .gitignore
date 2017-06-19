@@ -5,3 +5,5 @@ deploy.json
 
 *.swp
 config
+
+private_config_*.json

@@ -8,7 +8,7 @@ var nunjucks = require('nunjucks')
 var rubles = require('rubles').rubles
 var numeral = require('numeral')
 var redis = require('redis')
-var client = redis.createClient()
+var client = redis.createClient(process.env.REDIS_URL)
 
 var dateFormat = require('dateformat')
 var fs = require('fs')

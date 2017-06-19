@@ -1,0 +1,12 @@
+version: "3"
+services:
+  redis:
+    image: redis:3.2.9-alpine
+  bills:
+    image: drakmail/bills-generator
+    links:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - 8080:8080
