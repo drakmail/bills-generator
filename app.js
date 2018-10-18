@@ -69,28 +69,37 @@ app.get('/status', function (req, res) {
 })
 
 app.post('/request', function (req, httpRes) {
-  var curDate = dateFormat(new Date(), 'dd.mm.yyyy')
-  var redisDate = dateFormat(new Date(), 'dmyy')
-  client.incr('gc:bill-number:' + redisDate, function (err, billNumber) {
-    if (err) {
-      console.error(err)
-    }
-    billNumber = req.body.bill || (redisDate + '-' + billNumber)
-    var billname = 'bill-' + billNumber + '.pdf'
-    var html = fs.readFileSync('./public/data/bill.html', 'utf8')
-    var options = {
-      filename: './public/data/bills/' + billname,
-      format: 'A4',
-      orientation: 'landscape'
-    }
-    var pdfTemplate = env.renderString(html, {data: req.body, curDate: curDate, billNumber: '' + billNumber, config: config})
-    pdf.create(pdfTemplate, options).toFile(function (err, res) {
-      if (err) return console.log(err)
-      httpRes.set('Content-Disposition', ['attachment; filename=', billname, '.pdf'].join(''))
-      httpRes.type('pdf')
-      httpRes.sendFile(res.filename)
+  try {
+    var curDate = dateFormat(new Date(), 'dd.mm.yyyy')
+    var redisDate = dateFormat(new Date(), 'dmyy')
+    client.incr('gc:bill-number:' + redisDate, function (err, billNumber) {
+      try {
+        if (err) {
+          console.error(err)
+        }
+        billNumber = req.body.bill || (redisDate + '-' + billNumber)
+        var billname = 'bill-' + billNumber + '.pdf'
+        var html = fs.readFileSync('./public/data/bill.html', 'utf8')
+        var options = {
+          filename: './public/data/bills/' + billname,
+          format: 'A4'
+        }
+        var pdfTemplate = env.renderString(html, {data: req.body, curDate: curDate, billNumber: '' + billNumber, config: config})
+        pdf.create(pdfTemplate, options).toFile(function (err, res) {
+          if (err) return console.log(err)
+          httpRes.set('Content-Disposition', ['attachment; filename=', billname, '.pdf'].join(''))
+          httpRes.type('pdf')
+          httpRes.sendFile(res.filename)
+        })
+       } catch (e) {
+         httpRes.send({ status: 'error', error: e })
+         console.log('error generate', e)
+       }
     })
-  })
+  } catch (e) {
+    httpRes.send({ status: 'error', error: e })
+    console.log(e)
+  }
 })
 
 var nodeConfig = {
