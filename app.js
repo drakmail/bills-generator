@@ -81,6 +81,7 @@ app.post('/request', function (req, httpRes) {
         var billname = 'bill-' + billNumber + '.pdf'
         var html = fs.readFileSync('./public/data/bill.html', 'utf8')
         var options = {
+          orientation: 'landscape',
           filename: './public/data/bills/' + billname,
           format: 'A4'
         }
